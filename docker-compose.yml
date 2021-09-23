@@ -1,0 +1,8 @@
+version: "3"
+services:
+  php8:
+    image: composer:2
+    volumes:
+      - ./:/root/work
+    working_dir: /root/work
+    command: composer verify

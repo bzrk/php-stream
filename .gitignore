@@ -1,0 +1,10 @@
+# PhpStorm
+/.idea
+/.php-stream.iml
+
+# Composer
+/vendor
+/composer.lock
+
+# PHPunit
+/.phpunit.result.cache
