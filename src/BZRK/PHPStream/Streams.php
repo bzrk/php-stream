@@ -8,7 +8,7 @@ use BZRK\PHPStream\Streamable\StreamableArray;
 use BZRK\PHPStream\Streamable\StreamableCsvFile;
 use BZRK\PHPStream\Streamable\StreamableFile;
 use BZRK\PHPStream\Streamable\StreamableRange;
-use http\Exception\InvalidArgumentException;
+use InvalidArgumentException;
 
 class Streams
 {
