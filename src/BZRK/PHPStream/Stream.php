@@ -62,8 +62,8 @@ class Stream
 
     public function each(Closure $call): void
     {
-        foreach ($this->streamable as $it) {
-            $call($it);
+        foreach ($this->streamable as $key => $value) {
+            $call($value, $key);
         }
     }
 

@@ -24,9 +24,9 @@
   },
   "scripts": {
     "verify" : [
-      "@composer update", "@phpcbf", "@phpcs", "@phpstan", "phpunit"
+      "@composer update", "@phpcs", "@phpstan", "phpunit"
     ],
-    "phpcbf" : "phpcs --standard=PSR12 src tests",
+    "phpcbf" : "phpcbf --standard=PSR12 src tests",
     "phpcs" : "phpcs --standard=PSR12 src tests",
     "phpstan" : "phpstan analyse -l 5 src tests"
   }

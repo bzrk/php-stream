@@ -42,13 +42,16 @@ class StreamTest extends TestCase
 
     public function testEach(): void
     {
-        $result = [];
+        $values = [];
+        $keys = [];
         $stream = new Stream(new StreamableRange(2, 5));
-        $stream->each(function ($it) use (&$result) {
-            $result[] = $it;
+        $stream->each(function ($value, $key) use (&$values, &$keys) {
+            $values[] = $value;
+            $keys[] = $key;
         });
 
-        self::assertThat($result, self::equalTo([2, 3, 4, 5]));
+        self::assertThat($values, self::equalTo([2, 3, 4, 5]));
+        self::assertThat($keys, self::equalTo([0, 1, 2, 3]));
     }
 
     public function testMap(): void
