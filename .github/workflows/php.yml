@@ -1,0 +1,23 @@
+name: PHP Composer
+on:
+  - pull_request
+  - push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Verify
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+          extensions: phar
+          coverage: none
+          tools: composer:v2
+
+      - name: Run composer verify
+        run: composer verify
