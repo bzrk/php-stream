@@ -38,4 +38,13 @@ class Streams
     {
         return new Stream(new StreamableRange($start, $inclusiveEnd));
     }
+
+    public static function split(string $pattern, string $source): Stream
+    {
+        $data = preg_split($pattern, $source);
+        if (is_array($data)) {
+            return Streams::of($data);
+        }
+        return Streams::of([]);
+    }
 }

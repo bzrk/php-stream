@@ -58,4 +58,10 @@ class BasicsTest extends TestCase
             8 => 80,
         ]));
     }
+
+    public function testSplit(): void
+    {
+        $result = Streams::split("/[;,]/", "a;b,c.d")->toList();
+        self::assertThat($result, self::equalTo(['a', 'b', 'c.d']));
+    }
 }
