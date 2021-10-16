@@ -15,8 +15,8 @@ class StreamableArray extends StreamableIterator
 
     private function generator(array $data): Generator
     {
-        foreach ($data as $it) {
-            yield $it;
+        foreach ($data as $key => $it) {
+            yield $key => $it;
         }
     }
 }

@@ -64,4 +64,10 @@ class BasicsTest extends TestCase
         $result = Streams::split("/[;,]/", "a;b,c.d")->toList();
         self::assertThat($result, self::equalTo(['a', 'b', 'c.d']));
     }
+
+    public function testFilterWithKey()
+    {
+        $result = Streams::of(['a' => 'b', 'c' => 'd'])->filter(fn($val, $key) => $key === 'c')->toList(true);
+        self::assertThat($result, self::equalTo(['c' => 'd']));
+    }
 }

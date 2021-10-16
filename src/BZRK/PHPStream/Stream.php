@@ -69,11 +69,15 @@ class Stream
         }
     }
 
-    public function toList(): array
+    public function toList(bool $keepKeys = false): array
     {
         $data = [];
-        $this->each(function ($it) use (&$data): void {
-            $data[] = $it;
+        $this->each(function ($it, $key) use (&$data, $keepKeys): void {
+            if (!$keepKeys) {
+                $data[] = $it;
+            } else {
+                $data[$key] = $it;
+            }
         });
         return $data;
     }
