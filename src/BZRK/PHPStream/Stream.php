@@ -11,6 +11,8 @@ use BZRK\PHPStream\Iterator\SortIterator;
 use BZRK\PHPStream\Streamable\StreamableArray;
 use Closure;
 
+use function implode;
+
 class Stream
 {
     private Streamable $streamable;
@@ -106,5 +108,10 @@ class Stream
     public function skip(int $count): self
     {
         return new Stream(new LimitIterator($this->streamable, $count));
+    }
+
+    public function implode(string $seperator = ','): string
+    {
+        return implode($seperator, $this->toList());
     }
 }

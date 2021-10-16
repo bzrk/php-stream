@@ -147,4 +147,18 @@ class StreamTest extends TestCase
 
         self::assertThat($result, self::equalTo([2, 4, 6, 9]));
     }
+
+    public function testImplodeDefault(): void
+    {
+        $stream = new Stream(new StreamableArray(["a", "b", "c", "d"]));
+        $result = $stream->implode();
+        self::assertThat($result, self::equalTo("a,b,c,d"));
+    }
+
+    public function testImplode(): void
+    {
+        $stream = new Stream(new StreamableArray(["a", "b", "c", "d"]));
+        $result = $stream->implode(";");
+        self::assertThat($result, self::equalTo("a;b;c;d"));
+    }
 }
