@@ -6,9 +6,9 @@ namespace BZRK\PHPStream\Collection;
 
 use BZRK\PHPStream\Collection;
 
-class IntFloatCollection extends Collection
+class FloatCollection extends Collection
 {
-    public function __construct(float $data)
+    public function __construct(float ...$data)
     {
         parent::__construct($data);
     }

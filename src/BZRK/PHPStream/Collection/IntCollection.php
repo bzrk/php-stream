@@ -8,7 +8,7 @@ use BZRK\PHPStream\Collection;
 
 class IntCollection extends Collection
 {
-    public function __construct(int $data)
+    public function __construct(int ...$data)
     {
         parent::__construct($data);
     }
