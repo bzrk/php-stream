@@ -7,8 +7,10 @@ namespace BZRK\PHPStream;
 use BZRK\PHPStream\Streamable\StreamableArray;
 use BZRK\PHPStream\Streamable\StreamableCsvFile;
 use BZRK\PHPStream\Streamable\StreamableFile;
+use BZRK\PHPStream\Streamable\StreamableIterator;
 use BZRK\PHPStream\Streamable\StreamableRange;
 use InvalidArgumentException;
+use Iterator;
 
 class Streams
 {
@@ -16,7 +18,7 @@ class Streams
     {
     }
 
-    public static function of(array|File|CsvFile $data): Stream
+    public static function of(array|Iterator|File|CsvFile $data): Stream
     {
         return new Stream(self::streamableOfType($data));
     }
@@ -30,6 +32,8 @@ class Streams
                 return new StreamableFile($data);
             case $data instanceof CsvFile:
                 return new StreamableCsvFile($data);
+            case $data instanceof Iterator:
+                return new StreamableIterator($data);
         }
         throw new InvalidArgumentException("type not found");
     }
