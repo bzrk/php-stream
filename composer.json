@@ -3,7 +3,7 @@
   "description": "a library to simplify handling(filter, map, ...) collections in php",
   "minimum-stability": "stable",
   "license": ["MIT"],
-  "keywords": ["array", "collection", "filter", "list", "mapping"],
+  "keywords": ["array", "collection", "filter", "list", "mapping", "stream"],
   "authors": [
     {
       "name": "Thomas Wünsche"
