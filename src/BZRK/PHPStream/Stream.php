@@ -8,8 +8,9 @@ use BZRK\PHPStream\Iterator\CallableIterator;
 use BZRK\PHPStream\Iterator\FilterIterator;
 use BZRK\PHPStream\Iterator\LimitIterator;
 use BZRK\PHPStream\Iterator\SortIterator;
-use BZRK\PHPStream\Streamable\StreamableArray;
+use BZRK\PHPStream\Streamable\StreamableIterator;
 use Closure;
+use Generator;
 
 use function implode;
 
@@ -38,13 +39,15 @@ class Stream
 
     public function flatMap(Closure $call): self
     {
-        $data = [];
-        foreach ($this->streamable as $it) {
-            foreach ($it as $subIt) {
-                $data[] = $call($subIt);
+        $func = function (Closure $call): Generator {
+            foreach ($this->streamable as $it) {
+                foreach ($it as $subIt) {
+                    yield $call($subIt);
+                }
             }
-        }
-        return new Stream(new StreamableArray($data));
+        };
+
+        return new Stream(new StreamableIterator($func($call)));
     }
 
     public function filter(Closure $call): self
@@ -114,8 +117,8 @@ class Stream
         return new Stream(new LimitIterator($this->streamable, $count));
     }
 
-    public function implode(string $seperator = ','): string
+    public function implode(string $separator = ','): string
     {
-        return implode($seperator, $this->toList());
+        return implode($separator, $this->toList());
     }
 }
