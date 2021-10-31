@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace BZRK\PHPStream;
+namespace unit\BZRK\PHPStream;
 
+use BZRK\PHPStream\Comparator;
+use BZRK\PHPStream\Stream;
 use BZRK\PHPStream\Streamable\StreamableArray;
 use BZRK\PHPStream\Streamable\StreamableRange;
 use PHPUnit\Framework\TestCase;

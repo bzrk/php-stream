@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace BZRK\PHPStream\Streamable;
+namespace unit\BZRK\PHPStream\Streamable;
 
 use BZRK\PHPStream\CsvFile;
 use BZRK\PHPStream\Streamable;
+use BZRK\PHPStream\Streamable\StreamableCsvFile;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamFile;
 use PHPUnit\Framework\TestCase;

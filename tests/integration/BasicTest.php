@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace IntegrationTest;
+namespace integration;
 
 use BZRK\PHPStream\Comparator;
 use BZRK\PHPStream\Streams;
 use PHPUnit\Framework\TestCase;
 
-class BasicsTest extends TestCase
+class BasicTest extends TestCase
 {
     public function testMapFilterOrderMapComplexObjects(): void
     {

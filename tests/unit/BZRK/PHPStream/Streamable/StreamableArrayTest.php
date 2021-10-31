@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace BZRK\PHPStream\Streamable;
+namespace unit\BZRK\PHPStream\Streamable;
 
 use BZRK\PHPStream\Streamable;
+use BZRK\PHPStream\Streamable\StreamableArray;
 use PHPUnit\Framework\TestCase;
 
 class StreamableArrayTest extends TestCase
