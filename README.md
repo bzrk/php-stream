@@ -16,6 +16,7 @@ A library to handle Collections like in Java
 * public **first**(): mixed
 * public **limit**(int $size): Stream
 * public **order**(Comparator $comparator): Stream
+* public **run**(): Stream
 * public **skip**(int $count): Stream
 * public **implode**(string $separator = ','): string
 

@@ -102,6 +102,11 @@ class Stream
         return null;
     }
 
+    public function run(): self
+    {
+        return Streams::of($this->toList(true));
+    }
+
     public function limit(int $size): self
     {
         return new Stream(new LimitIterator($this->streamable, 0, $size));

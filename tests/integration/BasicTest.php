@@ -70,4 +70,39 @@ class BasicTest extends TestCase
         $result = Streams::of(['a' => 'b', 'c' => 'd'])->filter(fn($val, $key) => $key === 'c')->toList(true);
         self::assertThat($result, self::equalTo(['c' => 'd']));
     }
+
+    public function testFirst()
+    {
+        $store = [];
+
+        $result = Streams::range(1, 5)
+            ->map(
+                function (int $it) use (&$store) {
+                    $store[] = $it;
+                    return $it;
+                }
+            )
+            ->first();
+
+        self::assertThat($store, self::equalTo([1]));
+        self::assertThat($result, self::equalTo(1));
+    }
+
+    public function testRunFirst()
+    {
+        $store = [];
+
+        $result = Streams::range(1, 5)
+            ->map(
+                function (int $it) use (&$store) {
+                    $store[] = $it;
+                    return $it;
+                }
+            )
+            ->run()
+            ->first();
+
+        self::assertThat($store, self::equalTo([1, 2, 3, 4, 5]));
+        self::assertThat($result, self::equalTo(1));
+    }
 }
