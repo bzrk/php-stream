@@ -8,8 +8,14 @@ use ArrayIterator;
 use Countable;
 use Iterator;
 
+/**
+ * @implements Iterator<mixed, mixed>
+ */
 abstract class Collection implements Countable, Iterator
 {
+    /**
+     * @var ArrayIterator<int|string, mixed>
+     */
     protected ArrayIterator $iterator;
 
     public function __construct(mixed ...$data)
@@ -22,7 +28,7 @@ abstract class Collection implements Countable, Iterator
         return Streams::of($this->iterator);
     }
 
-    protected function addEntry(mixed $value)
+    protected function addEntry(mixed $value): void
     {
         $this->iterator->append($value);
     }

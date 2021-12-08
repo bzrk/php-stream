@@ -29,6 +29,6 @@
     ],
     "phpcbf" : "phpcbf --standard=PSR12 src tests",
     "phpcs" : "phpcs --standard=PSR12 src tests",
-    "phpstan" : "phpstan analyse -l 5 src tests"
+    "phpstan" : "phpstan analyse -l 6 src tests"
   }
 }

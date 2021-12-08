@@ -7,9 +7,17 @@ namespace BZRK\PHPStream\Iterator;
 use BZRK\PHPStream\Comparator;
 use BZRK\PHPStream\Streamable;
 use Generator;
+use IteratorIterator;
 
-class SortIterator extends \IteratorIterator implements Streamable
+/**
+ * @extends IteratorIterator<mixed, mixed, \Iterator>
+ */
+class SortIterator extends IteratorIterator implements Streamable
 {
+    /**
+     * @param Streamable<mixed> $streamable
+     * @param Comparator $comparator
+     */
     public function __construct(Streamable $streamable, Comparator $comparator)
     {
         $data = $this->toArray($streamable);
@@ -22,12 +30,12 @@ class SortIterator extends \IteratorIterator implements Streamable
         parent::__construct($fn());
     }
 
+    /**
+     * @param Streamable<mixed> $streamable
+     * @return array<mixed>
+     */
     private function toArray(Streamable $streamable): array
     {
-        $data = [];
-        foreach ($streamable as $it) {
-            $data[] = $it;
-        }
-        return $data;
+        return iterator_to_array($streamable);
     }
 }

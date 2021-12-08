@@ -65,13 +65,13 @@ class BasicTest extends TestCase
         self::assertThat($result, self::equalTo(['a', 'b', 'c.d']));
     }
 
-    public function testFilterWithKey()
+    public function testFilterWithKey(): void
     {
         $result = Streams::of(['a' => 'b', 'c' => 'd'])->filter(fn($val, $key) => $key === 'c')->toList(true);
         self::assertThat($result, self::equalTo(['c' => 'd']));
     }
 
-    public function testFirst()
+    public function testFirst(): void
     {
         $store = [];
 
@@ -88,7 +88,7 @@ class BasicTest extends TestCase
         self::assertThat($result, self::equalTo(1));
     }
 
-    public function testRunFirst()
+    public function testRunFirst(): void
     {
         $store = [];
 
@@ -106,7 +106,7 @@ class BasicTest extends TestCase
         self::assertThat($result, self::equalTo(1));
     }
 
-    public function testAssociateBy()
+    public function testAssociateBy(): void
     {
         $result = Streams::range(1, 5)->associateBy(fn($it) => $it * 2);
 

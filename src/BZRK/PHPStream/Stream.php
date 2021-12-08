@@ -16,8 +16,14 @@ use function implode;
 
 class Stream
 {
+    /**
+     * @var Streamable<mixed>
+     */
     private Streamable $streamable;
 
+    /**
+     * @param Streamable<mixed> $streamable
+     */
     public function __construct(Streamable $streamable)
     {
         $this->streamable = $streamable;
@@ -72,11 +78,20 @@ class Stream
         }
     }
 
+    /**
+     * @param bool $preserveKeys
+     * @return array<mixed, mixed>
+     */
     public function toList(bool $preserveKeys = false): array
     {
         return iterator_to_array($this->streamable, $preserveKeys);
     }
 
+    /**
+     * @param Closure $key
+     * @param Closure $value
+     * @return array<mixed, mixed>
+     */
     public function toMap(Closure $key, Closure $value): array
     {
         $func = function () use ($key, $value): Generator {
@@ -88,6 +103,10 @@ class Stream
         return iterator_to_array($func(), true);
     }
 
+    /**
+     * @param Closure $call
+     * @return array<mixed, mixed>
+     */
     public function associateBy(Closure $call): array
     {
         $func = function () use ($call): Generator {

@@ -20,11 +20,14 @@ class StreamsTest extends TestCase
      *
      * @dataProvider dataProviderTestOf
      */
-    public function testOf(mixed $type)
+    public function testOf(mixed $type): void
     {
         assertThat(Streams::of($type), self::isInstanceOf(Stream::class));
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function dataProviderTestOf(): array
     {
         return [
@@ -35,12 +38,12 @@ class StreamsTest extends TestCase
         ];
     }
 
-    public function testRange()
+    public function testRange(): void
     {
         assertThat(Streams::split("/[;,]/", "1,2"), self::isInstanceOf(Stream::class));
     }
 
-    public function testSplit()
+    public function testSplit(): void
     {
         assertThat(Streams::range(1, 3), self::isInstanceOf(Stream::class));
     }

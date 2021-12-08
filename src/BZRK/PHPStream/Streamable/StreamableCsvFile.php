@@ -14,6 +14,10 @@ class StreamableCsvFile extends StreamableIterator
         parent::__construct($this->generator($file));
     }
 
+    /**
+     * @param CsvFile $file
+     * @return Generator<array<string>>
+     */
     private function generator(CsvFile $file): Generator
     {
         while (!$file->eof()) {

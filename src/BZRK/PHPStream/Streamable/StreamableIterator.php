@@ -5,34 +5,41 @@ declare(strict_types=1);
 namespace BZRK\PHPStream\Streamable;
 
 use BZRK\PHPStream\Streamable;
+use Iterator;
 
 class StreamableIterator implements Streamable
 {
-    public function __construct(private \Iterator $iterator)
+    /**
+     * @param Iterator<mixed> $iterator
+     */
+    public function __construct(private Iterator $iterator)
     {
     }
 
-    public function current()
+    /**
+     * @return mixed
+     */
+    public function current(): mixed
     {
         return $this->iterator->current();
     }
 
-    public function next()
+    public function next(): void
     {
         $this->iterator->next();
     }
 
-    public function key()
+    public function key(): string|int|bool|null|float
     {
         return $this->iterator->key();
     }
 
-    public function valid()
+    public function valid(): bool
     {
         return $this->iterator->valid();
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         $this->iterator->rewind();
     }

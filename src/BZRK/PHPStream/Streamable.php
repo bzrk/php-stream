@@ -6,6 +6,9 @@ namespace BZRK\PHPStream;
 
 use Iterator;
 
+/**
+ * @extends Iterator<mixed>
+ */
 interface Streamable extends Iterator
 {
 }

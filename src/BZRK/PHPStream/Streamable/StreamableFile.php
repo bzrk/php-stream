@@ -14,6 +14,10 @@ class StreamableFile extends StreamableIterator
         parent::__construct($this->generator($file));
     }
 
+    /**
+     * @param File $file
+     * @return Generator<string>
+     */
     private function generator(File $file): Generator
     {
         while (!$file->eof()) {

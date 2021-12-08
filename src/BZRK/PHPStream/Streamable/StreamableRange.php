@@ -13,6 +13,11 @@ class StreamableRange extends StreamableIterator
         parent::__construct($this->generator($start, $end));
     }
 
+    /**
+     * @param int $start
+     * @param int $end
+     * @return Generator<int>
+     */
     private function generator(int $start, int $end): Generator
     {
         for ($it = $start; $it <= $end; $it++) {
