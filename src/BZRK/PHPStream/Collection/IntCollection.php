@@ -17,4 +17,9 @@ class IntCollection extends Collection
     {
         $this->addEntry($value);
     }
+
+    public function current(): int
+    {
+        return $this->iterator->current();
+    }
 }

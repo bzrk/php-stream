@@ -72,26 +72,31 @@ class Stream
         }
     }
 
-    public function toList(bool $keepKeys = false): array
+    public function toList(bool $preserveKeys = false): array
     {
-        $data = [];
-        $this->each(function ($it, $key) use (&$data, $keepKeys): void {
-            if (!$keepKeys) {
-                $data[] = $it;
-            } else {
-                $data[$key] = $it;
-            }
-        });
-        return $data;
+        return iterator_to_array($this->streamable, $preserveKeys);
     }
 
     public function toMap(Closure $key, Closure $value): array
     {
-        $data = [];
-        $this->each(function ($it) use (&$data, $key, $value): void {
-            $data[$key($it)] = $value($it);
-        });
-        return $data;
+        $func = function () use ($key, $value): Generator {
+            foreach ($this->streamable as $it) {
+                yield $key($it) => $value($it);
+            }
+        };
+
+        return iterator_to_array($func(), true);
+    }
+
+    public function associateBy(Closure $call): array
+    {
+        $func = function () use ($call): Generator {
+            foreach ($this->streamable as $it) {
+                yield $call($it) => $it;
+            }
+        };
+
+        return iterator_to_array($func(), true);
     }
 
     public function first(): mixed

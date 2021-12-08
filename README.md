@@ -19,6 +19,7 @@ A library to handle Collections like in Java
 * public **run**(): Stream
 * public **skip**(int $count): Stream
 * public **implode**(string $separator = ','): string
+* public **associateBy**(Closure $call): array
 
 ## Streams Class
 * public static **of**(array|Iterator|File|CsvFile $data): Stream

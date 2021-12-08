@@ -105,4 +105,13 @@ class BasicTest extends TestCase
         self::assertThat($store, self::equalTo([1, 2, 3, 4, 5]));
         self::assertThat($result, self::equalTo(1));
     }
+
+    public function testAssociateBy()
+    {
+        $result = Streams::range(1, 5)->associateBy(fn($it) => $it * 2);
+
+        self::assertThat($result, self::equalTo(
+            [2 => 1, 4 => 2, 6 => 3, 8 => 4, 10 => 5]
+        ));
+    }
 }

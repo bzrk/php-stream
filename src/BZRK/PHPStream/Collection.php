@@ -8,9 +8,9 @@ use ArrayIterator;
 use Countable;
 use Iterator;
 
-class Collection implements Countable, Iterator
+abstract class Collection implements Countable, Iterator
 {
-    private ArrayIterator $iterator;
+    protected ArrayIterator $iterator;
 
     public function __construct(mixed ...$data)
     {
@@ -30,11 +30,6 @@ class Collection implements Countable, Iterator
     public function count(): int
     {
         return $this->iterator->count();
-    }
-
-    public function current(): mixed
-    {
-        return $this->iterator->current();
     }
 
     public function next(): void

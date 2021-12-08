@@ -17,4 +17,9 @@ class FloatCollection extends Collection
     {
         $this->addEntry($value);
     }
+
+    public function current(): float
+    {
+        return $this->iterator->current();
+    }
 }

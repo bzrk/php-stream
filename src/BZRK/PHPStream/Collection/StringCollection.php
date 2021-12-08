@@ -17,4 +17,9 @@ class StringCollection extends Collection
     {
         $this->addEntry($value);
     }
+
+    public function current(): string
+    {
+        return $this->iterator->current();
+    }
 }
