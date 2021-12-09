@@ -20,6 +20,7 @@ A library to handle Collections like in Java
 * public **skip**(int $count): Stream
 * public **implode**(string $separator = ','): string
 * public **associateBy**(Closure $call): array
+* public **collect**(string $class): Collection
 
 ## Streams Class
 * public static **of**(array|Iterator|File|CsvFile $data): Stream

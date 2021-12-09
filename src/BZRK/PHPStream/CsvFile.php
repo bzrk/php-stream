@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace BZRK\PHPStream;
 
-class CsvFile extends \SplFileObject
+use SplFileObject;
+
+class CsvFile extends SplFileObject
 {
     public function __construct(
         string $path,

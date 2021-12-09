@@ -30,6 +30,7 @@ class Streams
     /**
      * @param mixed $data
      * @return Streamable<mixed>
+     * @throws StreamException
      */
     private static function streamableOfType(mixed $data): Streamable
     {
@@ -43,7 +44,7 @@ class Streams
             case $data instanceof Iterator:
                 return new StreamableIterator($data);
         }
-        throw new InvalidArgumentException("type not found");
+        throw StreamException::createFromThrowable(new InvalidArgumentException("type not found"));
     }
 
     public static function range(int $start, int $inclusiveEnd): Stream

@@ -11,6 +11,8 @@ use BZRK\PHPStream\Iterator\SortIterator;
 use BZRK\PHPStream\Streamable\StreamableIterator;
 use Closure;
 use Generator;
+use InvalidArgumentException;
+use Throwable;
 
 use function implode;
 
@@ -31,11 +33,7 @@ class Stream
 
     public function count(): int
     {
-        $count = 0;
-        $this->each(function () use (&$count): void {
-            $count++;
-        });
-        return $count;
+        return iterator_count($this->streamable);
     }
 
     public function map(Closure $call): self
@@ -149,5 +147,24 @@ class Stream
     public function implode(string $separator = ','): string
     {
         return implode($separator, $this->toList());
+    }
+
+    /**
+     * @param string $class
+     * @return Collection<mixed>
+     * @throws StreamException
+     */
+    public function collect(string $class): Collection
+    {
+        if (!is_subclass_of($class, Collection::class)) {
+            throw StreamException::createFromThrowable(
+                new InvalidArgumentException('$class not from type ' . Collection::class)
+            );
+        }
+        try {
+            return new $class(...$this->toList());
+        } catch (Throwable $throwable) {
+            throw StreamException::createFromThrowable($throwable);
+        }
     }
 }

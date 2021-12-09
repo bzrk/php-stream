@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 namespace integration;
 
+use BZRK\PHPStream\Collection\IntCollection;
+use BZRK\PHPStream\Collection\StringCollection;
 use BZRK\PHPStream\Comparator;
+use BZRK\PHPStream\StreamException;
 use BZRK\PHPStream\Streams;
+use Exception;
 use PHPUnit\Framework\TestCase;
+
+use function PHPUnit\Framework\equalTo;
 
 class BasicTest extends TestCase
 {
@@ -113,5 +119,32 @@ class BasicTest extends TestCase
         self::assertThat($result, self::equalTo(
             [2 => 1, 4 => 2, 6 => 3, 8 => 4, 10 => 5]
         ));
+    }
+
+    /**
+     * @throws StreamException
+     */
+    public function testCollect(): void
+    {
+        $result = Streams::range(1, 5)->collect(IntCollection::class);
+
+        self::assertThat($result, self::isInstanceOf(IntCollection::class));
+        self::assertThat($result->stream()->implode(), equalTo('1,2,3,4,5'));
+    }
+
+    public function testCollectWrongCollectionType(): void
+    {
+        self::expectException(StreamException::class);
+        self::expectExceptionMessage('$class not from type BZRK\PHPStream\Collection');
+
+        Streams::range(1, 5)->collect(Exception::class);
+    }
+
+    public function testCollectWrongEntryTypeOfCollection(): void
+    {
+        self::expectException(StreamException::class);
+        self::expectExceptionMessageMatches('/Argument #1 must be of type string, int given,/');
+
+        Streams::range(1, 5)->collect(StringCollection::class);
     }
 }
