@@ -8,6 +8,7 @@ use ArrayIterator;
 use BZRK\PHPStream\CsvFile;
 use BZRK\PHPStream\File;
 use BZRK\PHPStream\Stream;
+use BZRK\PHPStream\StreamException;
 use BZRK\PHPStream\Streams;
 use PHPUnit\Framework\TestCase;
 
@@ -19,8 +20,9 @@ class StreamsTest extends TestCase
      * @param mixed $type
      *
      * @dataProvider dataProviderTestOf
+     * @throws StreamException
      */
-    public function testOf(mixed $type): void
+    public function testOf($type): void
     {
         assertThat(Streams::of($type), self::isInstanceOf(Stream::class));
     }
@@ -36,6 +38,15 @@ class StreamsTest extends TestCase
             [new CsvFile(__FILE__)],
             [new ArrayIterator([])]
         ];
+    }
+
+    public function testOfWrongType(): void
+    {
+        $this->expectException(StreamException::class);
+        $this->expectExceptionMessage("type not found");
+
+        // @phpstan-ignore-next-line
+        Streams::of(1);
     }
 
     public function testRange(): void

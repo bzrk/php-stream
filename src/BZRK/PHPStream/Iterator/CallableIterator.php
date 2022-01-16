@@ -13,19 +13,21 @@ use IteratorIterator;
  */
 class CallableIterator extends IteratorIterator implements Streamable
 {
+    private Closure $closure;
+
     /**
      * @param Streamable<mixed> $streamable
      * @param Closure $closure
      */
-    public function __construct(Streamable $streamable, private Closure $closure)
+    public function __construct(Streamable $streamable, \Closure $closure)
     {
         parent::__construct($streamable);
+
+        $this->closure = $closure;
     }
 
-    /**
-     * @return mixed
-     */
-    public function current(): mixed
+    #[\ReturnTypeWillChange]
+    public function current()
     {
         $call = $this->closure;
         return $call(parent::current());

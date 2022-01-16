@@ -8,13 +8,21 @@ use SplFileObject;
 
 class CsvFile extends SplFileObject
 {
+    private string $separator = ",";
+    private string $enclosure = "\"";
+    private string $escape = "\\";
+
     public function __construct(
         string $path,
-        private string $separator = ",",
-        private string $enclosure = "\"",
-        private string $escape = "\\"
+        string $separator = ",",
+        string $enclosure = "\"",
+        string $escape = "\\"
     ) {
         parent::__construct($path);
+
+        $this->separator = $separator;
+        $this->enclosure = $enclosure;
+        $this->escape = $escape;
     }
 
     /**

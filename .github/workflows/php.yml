@@ -5,6 +5,9 @@ on:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        php_version: [ 7.4, 8.1 ]
     runs-on: ubuntu-latest
 
     steps:
@@ -14,7 +17,7 @@ jobs:
       - name: Verify
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.0
+          php-version: ${{ matrix.php_version }}
           extensions: phar
           coverage: none
           tools: composer:v2

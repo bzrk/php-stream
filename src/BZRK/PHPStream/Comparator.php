@@ -6,8 +6,11 @@ namespace BZRK\PHPStream;
 
 class Comparator
 {
-    public function __construct(private \Closure $closure)
+    private \Closure $closure;
+
+    public function __construct(\Closure $closure)
     {
+        $this->closure = $closure;
     }
 
     public static function int(): Comparator
@@ -20,7 +23,13 @@ class Comparator
         return new Comparator(fn(string $value1, $value2) => strcmp($value1, $value2));
     }
 
-    final public function compare(mixed $value1, mixed $value2): int
+    /**
+     * @param mixed $value1
+     * @param mixed $value2
+     *
+     * @return int
+     */
+    final public function compare($value1, $value2): int
     {
         $call = $this->closure;
         return $call($value1, $value2);
