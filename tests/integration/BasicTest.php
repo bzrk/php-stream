@@ -143,7 +143,11 @@ class BasicTest extends TestCase
     public function testCollectWrongEntryTypeOfCollection(): void
     {
         self::expectException(StreamException::class);
-        self::expectExceptionMessageMatches('/Argument #1 must be of type string, int given,/');
+        if (PHP_MAJOR_VERSION === 7) {
+            self::expectExceptionMessageMatches('/must be of the type string, int given/');
+        } else {
+            self::expectExceptionMessageMatches('/Argument #1 must be of type string, int given,/');
+        }
 
         Streams::range(1, 5)->collect(StringCollection::class);
     }

@@ -18,9 +18,12 @@ abstract class Collection implements Countable, Iterator
      */
     protected ArrayIterator $iterator;
 
-    public function __construct(mixed ...$data)
+    /**
+     * @param array<mixed> $data
+     */
+    protected function __construct(array $data)
     {
-        $this->iterator = new ArrayIterator(...$data);
+        $this->iterator = new ArrayIterator($data);
     }
 
     public function stream(): Stream
@@ -28,7 +31,10 @@ abstract class Collection implements Countable, Iterator
         return Streams::of($this->iterator);
     }
 
-    protected function addEntry(mixed $value): void
+    /**
+     * @param mixed $value
+     */
+    protected function addEntry($value): void
     {
         $this->iterator->append($value);
     }
@@ -43,7 +49,10 @@ abstract class Collection implements Countable, Iterator
         $this->iterator->next();
     }
 
-    public function key(): float|bool|int|string|null
+    /**
+     * @return mixed
+     */
+    public function key(): mixed
     {
         return $this->iterator->key();
     }

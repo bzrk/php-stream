@@ -116,7 +116,10 @@ class Stream
         return iterator_to_array($func(), true);
     }
 
-    public function first(): mixed
+    /**
+     * @return mixed|null
+     */
+    public function first()
     {
         foreach ($this->streamable as $it) {
             return $it;

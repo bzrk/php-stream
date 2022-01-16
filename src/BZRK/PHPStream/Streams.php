@@ -21,18 +21,19 @@ class Streams
     /**
      * @param array<mixed>|Iterator<mixed>|File|CsvFile $data
      * @return Stream
+     * @throws StreamException
      */
-    public static function of(array|Iterator|File|CsvFile $data): Stream
+    public static function of($data): Stream
     {
         return new Stream(self::streamableOfType($data));
     }
 
     /**
-     * @param mixed $data
+     * @param array<mixed>|Iterator<mixed>|File|CsvFile $data
      * @return Streamable<mixed>
      * @throws StreamException
      */
-    private static function streamableOfType(mixed $data): Streamable
+    private static function streamableOfType($data): Streamable
     {
         switch (true) {
             case is_array($data):

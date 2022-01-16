@@ -10,16 +10,20 @@ use Iterator;
 class StreamableIterator implements Streamable
 {
     /**
-     * @param Iterator<mixed> $iterator
+     * @var Iterator<mixed> $iterator
      */
-    public function __construct(private Iterator $iterator)
-    {
-    }
+    private Iterator $iterator;
 
     /**
-     * @return mixed
+     * @param Iterator<mixed> $iterator
      */
-    public function current(): mixed
+    public function __construct(Iterator $iterator)
+    {
+        $this->iterator = $iterator;
+    }
+
+    #[\ReturnTypeWillChange]
+    public function current()
     {
         return $this->iterator->current();
     }
@@ -29,7 +33,8 @@ class StreamableIterator implements Streamable
         $this->iterator->next();
     }
 
-    public function key(): string|int|bool|null|float
+    #[\ReturnTypeWillChange]
+    public function key()
     {
         return $this->iterator->key();
     }
