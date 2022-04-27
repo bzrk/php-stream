@@ -7,6 +7,7 @@ namespace integration;
 use BZRK\PHPStream\Collection\IntCollection;
 use BZRK\PHPStream\Collection\StringCollection;
 use BZRK\PHPStream\Comparator;
+use BZRK\PHPStream\Stream;
 use BZRK\PHPStream\StreamException;
 use BZRK\PHPStream\Streams;
 use Exception;
@@ -118,6 +119,25 @@ class BasicTest extends TestCase
 
         self::assertThat($result, self::equalTo(
             [2 => 1, 4 => 2, 6 => 3, 8 => 4, 10 => 5]
+        ));
+    }
+
+    public function testBatch(): void
+    {
+        $data = [];
+
+        Streams::range(1, 10)
+            ->batch(4)
+            ->each(function (Stream $stream) use (&$data) {
+                $data[] = $stream->implode();
+            });
+
+        self::assertThat($data, equalTo(
+            [
+                '1,2,3,4',
+                '5,6,7,8',
+                '9,10',
+            ]
         ));
     }
 
