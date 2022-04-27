@@ -127,6 +127,9 @@ class Stream
         return null;
     }
 
+    /**
+     * @throws StreamException
+     */
     public function run(): self
     {
         return Streams::of($this->toList(true));
@@ -150,6 +153,30 @@ class Stream
     public function implode(string $separator = ','): string
     {
         return implode($separator, $this->toList());
+    }
+
+    public function batch(int $count): self
+    {
+        /**
+         * @throws StreamException
+         */
+        $func = function (int $count): Generator {
+            $data = [];
+
+            foreach ($this->streamable as $it) {
+                $data[] = $it;
+                if (count($data) >= $count) {
+                    yield Streams::of($data);
+                    $data = [];
+                }
+            }
+
+            if (count($data) > 0) {
+                yield Streams::of($data);
+            }
+        };
+
+        return new Stream(new StreamableIterator($func($count)));
     }
 
     /**

@@ -6,7 +6,6 @@ namespace unit\BZRK\PHPStream\Collection;
 
 use BZRK\PHPStream\Collection\StringCollection;
 use BZRK\PHPStream\Stream;
-use Hoa\Iterator\Recursive\Iterator;
 use PHPUnit\Framework\TestCase;
 
 class StringCollectionTest extends TestCase
