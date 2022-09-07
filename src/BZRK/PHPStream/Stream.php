@@ -199,10 +199,10 @@ class Stream
     }
 
     /**
-     * @param callable|null $func
+     * @param Closure|null $func
      * @return Generator
      */
-    public function toGenerator(callable $func = null): Generator
+    public function toGenerator(Closure $func = null): Generator
     {
         $ret = null;
         foreach ($this->streamable as $it) {
