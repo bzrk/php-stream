@@ -199,14 +199,18 @@ class Stream
     }
 
     /**
-     * @param mixed|null $return
+     * @param callable|null $func
      * @return Generator
      */
-    public function toGenerator($return = null): Generator
+    public function toGenerator(callable $func = null): Generator
     {
+        $ret = null;
         foreach ($this->streamable as $it) {
+            if (null !== $func) {
+                $ret = $func($it);
+            }
             yield $it;
         }
-        return $return;
+        return $ret;
     }
 }
