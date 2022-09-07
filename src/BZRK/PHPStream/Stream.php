@@ -198,10 +198,15 @@ class Stream
         }
     }
 
-    public function toGenerator(): Generator
+    /**
+     * @param mixed|null $return
+     * @return Generator
+     */
+    public function toGenerator($return = null): Generator
     {
         foreach ($this->streamable as $it) {
             yield $it;
         }
+        return $return;
     }
 }

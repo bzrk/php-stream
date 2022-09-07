@@ -179,5 +179,15 @@ class BasicTest extends TestCase
 
         self::assertThat($result, self::isInstanceOf(Generator::class));
         self::assertThat(iterator_to_array($result), self::equalTo([1, 2, 3, 4, 5]));
+        self::assertThat($result->getReturn(), self::isNull());
+    }
+
+    public function testToGeneratorWithReturn(): void
+    {
+        $result = Streams::range(1, 2)->toGenerator(25);
+
+        self::assertThat($result, self::isInstanceOf(Generator::class));
+        self::assertThat(iterator_to_array($result), self::equalTo([1, 2]));
+        self::assertThat($result->getReturn(), self::equalTo(25));
     }
 }
