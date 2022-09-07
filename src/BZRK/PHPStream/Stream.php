@@ -197,4 +197,11 @@ class Stream
             throw StreamException::createFromThrowable($throwable);
         }
     }
+
+    public function toGenerator(): Generator
+    {
+        foreach ($this->streamable as $it) {
+            yield $it;
+        }
+    }
 }

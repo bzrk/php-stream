@@ -11,6 +11,7 @@ use BZRK\PHPStream\Stream;
 use BZRK\PHPStream\StreamException;
 use BZRK\PHPStream\Streams;
 use Exception;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 use function PHPUnit\Framework\equalTo;
@@ -170,5 +171,13 @@ class BasicTest extends TestCase
         }
 
         Streams::range(1, 5)->collect(StringCollection::class);
+    }
+
+    public function testToGenerator(): void
+    {
+        $result = Streams::range(1, 5)->toGenerator();
+
+        self::assertThat($result, self::isInstanceOf(Generator::class));
+        self::assertThat(iterator_to_array($result), self::equalTo([1, 2, 3, 4, 5]));
     }
 }
