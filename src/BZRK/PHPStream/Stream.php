@@ -199,18 +199,30 @@ class Stream
     }
 
     /**
-     * @param Closure|null $func
+     * @param Closure|null $call
+     * @param mixed $default
      * @return Generator
      */
-    public function toGenerator(Closure $func = null): Generator
+    public function toGenerator(Closure $call = null, $default = null): Generator
     {
         $ret = null;
+        $func = $call ?? fn() => null;
         foreach ($this->streamable as $it) {
-            if (null !== $func) {
-                $ret = $func($it);
-            }
+            $ret = $func($it);
             yield $it;
         }
-        return $ret;
+        return $ret ?? $default;
+    }
+
+    public function callBack(Closure $call): self
+    {
+        $func = function (Closure $call): Generator {
+            foreach ($this->streamable as $it) {
+                $call($it);
+                yield $it;
+            }
+        };
+
+        return new Stream(new StreamableIterator($func($call)));
     }
 }

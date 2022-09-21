@@ -22,7 +22,8 @@ A library to handle Collections like in Java
 * public **batch**(int $count): Stream
 * public **associateBy**(Closure $call): array
 * public **collect**(string $class): Collection
-* public **toGenerator**(Closure $func = null): Generator
+* public **toGenerator**(Closure $call = null, $default = null): Generator
+* public **callBack**(Closure $call): Stream
 
 ## Streams Class
 * public static **of**(array|Iterator|File|CsvFile $data): Stream

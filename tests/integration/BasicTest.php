@@ -191,4 +191,30 @@ class BasicTest extends TestCase
         self::assertThat(iterator_to_array($result), self::equalTo([1, 2]));
         self::assertThat($result->getReturn(), self::equalTo(4));
     }
+
+    /**
+     * @throws StreamException
+     */
+    public function testToGeneratorWithDefaultReturn(): void
+    {
+        $result = Streams::of([])->toGenerator(fn(int $i) => $i * 2, 99);
+
+        self::assertThat($result, self::isInstanceOf(Generator::class));
+        self::assertThat(iterator_to_array($result), self::equalTo([]));
+        self::assertThat($result->getReturn(), self::equalTo(99));
+    }
+
+    public function testCallBack(): void
+    {
+        $tmp = 0;
+        $result = Streams::range(1, 5)
+            ->callBack(function (int $it) use (&$tmp) {
+                $tmp = $it;
+            })
+            ->map(fn(int $it) => $it * 2)
+            ->toList();
+
+        self::assertEquals(5, $tmp);
+        self::assertEquals([2, 4, 6, 8, 10], $result);
+    }
 }
