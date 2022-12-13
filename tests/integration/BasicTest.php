@@ -35,6 +35,20 @@ class BasicTest extends TestCase
         self::assertThat($result, self::equalTo(['hallo - 2', 'hallo - 3']));
     }
 
+    public function testMapWithKey(): void
+    {
+        $data = [
+            'a' => (object)["name" => "halloa"],
+            'b' => (object)["name" => "hallob"],
+            'c' => (object)["name" => "halloc"],
+        ];
+
+        $result = Streams::of($data)
+            ->map(fn(object $obj, string $key) => "$obj->name:$key")
+            ->toList();
+        self::assertThat($result, self::equalTo(['halloa:a', 'hallob:b', 'halloc:c']));
+    }
+
     public function testGetFirstObjectWithHAndGInDataSkipOne(): void
     {
         $data = [

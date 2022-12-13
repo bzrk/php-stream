@@ -30,6 +30,6 @@ class CallableIterator extends IteratorIterator implements Streamable
     public function current()
     {
         $call = $this->closure;
-        return $call(parent::current());
+        return $call(parent::current(), parent::key());
     }
 }
