@@ -10,6 +10,9 @@ use BZRK\PHPStream\File;
 use BZRK\PHPStream\Stream;
 use BZRK\PHPStream\StreamException;
 use BZRK\PHPStream\Streams;
+use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function PHPUnit\Framework\assertThat;
@@ -17,30 +20,25 @@ use function PHPUnit\Framework\assertThat;
 class StreamsTest extends TestCase
 {
     /**
-     * @param mixed $type
-     *
-     * @dataProvider dataProviderTestOf
      * @throws StreamException
      */
-    public function testOf($type): void
+    #[Test]
+    #[DataProvider('dataProviderTestOf')]
+    public function testOf(mixed $type): void
     {
         assertThat(Streams::of($type), self::isInstanceOf(Stream::class));
     }
 
-    /**
-     * @return array<mixed>
-     */
-    public function dataProviderTestOf(): array
+    public static function dataProviderTestOf(): Generator
     {
-        return [
-            [[]],
-            [new File(__FILE__)],
-            [new CsvFile(__FILE__)],
-            [new ArrayIterator([])]
-        ];
+        yield [[]];
+        yield [new File(__FILE__)];
+        yield [new CsvFile(__FILE__)];
+        yield [new ArrayIterator([])];
     }
 
-    public function testOfWrongType(): void
+    #[Test]
+    public function createByWrongType(): void
     {
         $this->expectException(StreamException::class);
         $this->expectExceptionMessage("type not found");
@@ -49,12 +47,14 @@ class StreamsTest extends TestCase
         Streams::of(1);
     }
 
-    public function testRange(): void
+    #[Test]
+    public function createBySplittingAString(): void
     {
         assertThat(Streams::split("/[;,]/", "1,2"), self::isInstanceOf(Stream::class));
     }
 
-    public function testSplit(): void
+    #[Test]
+    public function createStreamFromRange(): void
     {
         assertThat(Streams::range(1, 3), self::isInstanceOf(Stream::class));
     }
