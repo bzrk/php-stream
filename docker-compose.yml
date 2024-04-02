@@ -1,14 +1,8 @@
 version: "3"
 services:
-  php7:
-    image: bzrk/php-cli:7.4
-    volumes:
-      - ./:/root/work
-    working_dir: /root/work
-    command: composer verify
   php8:
-    image: bzrk/php-cli:8.1
+    image: bzrk/php-stream
+    build: ./docker
     volumes:
-      - ./:/root/work
-    working_dir: /root/work
+      - ./:/app
     command: composer verify

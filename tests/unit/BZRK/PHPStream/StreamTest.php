@@ -8,11 +8,13 @@ use BZRK\PHPStream\Comparator;
 use BZRK\PHPStream\Stream;
 use BZRK\PHPStream\Streamable\StreamableArray;
 use BZRK\PHPStream\Streamable\StreamableRange;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class StreamTest extends TestCase
 {
-    public function testCount(): void
+    #[Test]
+    public function counting(): void
     {
         $stream = new Stream(new StreamableRange(1, 5));
         $result = $stream->count();
@@ -20,7 +22,8 @@ class StreamTest extends TestCase
         self::assertThat($result, self::equalTo(5));
     }
 
-    public function testToList(): void
+    #[Test]
+    public function toList(): void
     {
         $stream = new Stream(new StreamableRange(1, 5));
         $result = $stream->toList();
@@ -28,7 +31,8 @@ class StreamTest extends TestCase
         self::assertThat($result, self::equalTo([1, 2, 3, 4, 5]));
     }
 
-    public function testToMap(): void
+    #[Test]
+    public function toMap(): void
     {
         $stream = new Stream(new StreamableArray([
             (object)['id' => 1, 'name' => 'name1'],
@@ -42,7 +46,8 @@ class StreamTest extends TestCase
         ]));
     }
 
-    public function testEach(): void
+    #[Test]
+    public function each(): void
     {
         $values = [];
         $keys = [];
@@ -56,7 +61,8 @@ class StreamTest extends TestCase
         self::assertThat($keys, self::equalTo([0, 1, 2, 3]));
     }
 
-    public function testMap(): void
+    #[Test]
+    public function map(): void
     {
         $stream = new Stream(new StreamableRange(1, 5));
         $result = $stream->map(fn($it) => $it * 2)->toList();
@@ -64,7 +70,8 @@ class StreamTest extends TestCase
         self::assertThat($result, self::equalTo([2, 4, 6, 8, 10]));
     }
 
-    public function testFlatMap(): void
+    #[Test]
+    public function flatMap(): void
     {
         $data = [
             [1, 2],
@@ -77,7 +84,8 @@ class StreamTest extends TestCase
         self::assertThat($result, self::equalTo([1, 2, 3, 4, 5]));
     }
 
-    public function testMapFlatMap(): void
+    #[Test]
+    public function mapFlatMap(): void
     {
         $data = [
             ['objs' => [['data' => [1, 2]], ['data' => [3, 4]]]],
@@ -94,7 +102,8 @@ class StreamTest extends TestCase
         self::assertThat($result, self::equalTo([1, 2, 3, 4, 5, 6, 7, 8]));
     }
 
-    public function testFilter(): void
+    #[Test]
+    public function filter(): void
     {
         $stream = new Stream(new StreamableRange(1, 5));
         $result = $stream->filter(fn($it) => $it % 2 === 0)->toList();
@@ -102,7 +111,8 @@ class StreamTest extends TestCase
         self::assertThat($result, self::equalTo([2, 4]));
     }
 
-    public function testNotNull(): void
+    #[Test]
+    public function notNull(): void
     {
         $stream = new Stream(new StreamableArray([0, "", '', [], null, 2, 3]));
         $result = $stream->notNull()->toList();
@@ -110,7 +120,8 @@ class StreamTest extends TestCase
         self::assertThat($result, self::equalTo([0, "", '', [], 2, 3]));
     }
 
-    public function testNotEmpty(): void
+    #[Test]
+    public function notEmpty(): void
     {
         $stream = new Stream(new StreamableArray([0, "", '', [], null, 2, 3]));
         $result = $stream->notEmpty()->toList();
@@ -118,7 +129,8 @@ class StreamTest extends TestCase
         self::assertThat($result, self::equalTo([2, 3]));
     }
 
-    public function testFirst(): void
+    #[Test]
+    public function first(): void
     {
         $stream = new Stream(new StreamableRange(1, 5));
         $result = $stream->first();
@@ -126,7 +138,8 @@ class StreamTest extends TestCase
         self::assertThat($result, self::equalTo(1));
     }
 
-    public function testLimit(): void
+    #[Test]
+    public function limit(): void
     {
         $stream = new Stream(new StreamableRange(1, 5));
         $result = $stream->limit(3)->toList();
@@ -134,7 +147,8 @@ class StreamTest extends TestCase
         self::assertThat($result, self::equalTo([1, 2, 3]));
     }
 
-    public function testSkip(): void
+    #[Test]
+    public function skip(): void
     {
         $stream = new Stream(new StreamableRange(1, 5));
         $result = $stream->skip(2)->toList();
@@ -142,7 +156,8 @@ class StreamTest extends TestCase
         self::assertThat($result, self::equalTo([3, 4, 5]));
     }
 
-    public function testOrder(): void
+    #[Test]
+    public function order(): void
     {
         $stream = new Stream(new StreamableArray([4, 2, 6, 9]));
         $result = $stream->order(Comparator::int())->toList();
@@ -150,14 +165,16 @@ class StreamTest extends TestCase
         self::assertThat($result, self::equalTo([2, 4, 6, 9]));
     }
 
-    public function testImplodeDefault(): void
+    #[Test]
+    public function implodeDefault(): void
     {
         $stream = new Stream(new StreamableArray(["a", "b", "c", "d"]));
         $result = $stream->implode();
         self::assertThat($result, self::equalTo("a,b,c,d"));
     }
 
-    public function testImplode(): void
+    #[Test]
+    public function implode(): void
     {
         $stream = new Stream(new StreamableArray(["a", "b", "c", "d"]));
         $result = $stream->implode(";");
