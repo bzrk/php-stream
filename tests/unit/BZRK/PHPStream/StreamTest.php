@@ -180,4 +180,20 @@ class StreamTest extends TestCase
         $result = $stream->implode(";");
         self::assertThat($result, self::equalTo("a;b;c;d"));
     }
+
+    #[Test]
+    public function joinDefault(): void
+    {
+        $stream = new Stream(new StreamableArray(["a", "b", "c", "d"]));
+        $result = $stream->join();
+        self::assertThat($result, self::equalTo("a,b,c,d"));
+    }
+
+    #[Test]
+    public function join(): void
+    {
+        $stream = new Stream(new StreamableArray(["a", "b", "c", "d"]));
+        $result = $stream->join(";");
+        self::assertThat($result, self::equalTo("a;b;c;d"));
+    }
 }

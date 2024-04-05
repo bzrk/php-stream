@@ -155,6 +155,11 @@ class Stream
         return implode($separator, $this->toList());
     }
 
+    public function join(string $separator = ','): string
+    {
+        return $this->implode($separator);
+    }
+
     public function batch(int $count): self
     {
         /**
