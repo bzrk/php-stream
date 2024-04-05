@@ -19,6 +19,7 @@ A library to handle Collections like in Java
 * public **run**(): Stream
 * public **skip**(int $count): Stream
 * public **implode**(string $separator = ','): string
+* public **join**(string $separator = ','): string --> alias for implode
 * public **batch**(int $count): Stream
 * public **associateBy**(Closure $call): array
 * public **collect**(string $class): Collection
