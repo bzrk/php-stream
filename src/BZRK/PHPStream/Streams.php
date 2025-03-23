@@ -12,6 +12,10 @@ use BZRK\PHPStream\Streamable\StreamableRange;
 use InvalidArgumentException;
 use Iterator;
 
+/**
+ * @template TKey
+ * @template TValue
+ */
 class Streams
 {
     private function __construct()
@@ -19,40 +23,44 @@ class Streams
     }
 
     /**
-     * @param array<mixed>|Iterator<mixed>|File|CsvFile $data
-     * @return Stream
-     * @throws StreamException
+     * @param Iterator<TKey, TValue>|CsvFile|File|array<TKey, TValue> $data
+     * @return Stream<TKey, TValue>
      */
-    public static function of($data): Stream
+    public static function of(File|Iterator|array|CsvFile $data): Stream
     {
         return new Stream(self::streamableOfType($data));
     }
 
     /**
-     * @param array<mixed>|Iterator<mixed>|File|CsvFile $data
-     * @return Streamable<mixed>
-     * @throws StreamException
+     * @param Iterator<TKey, TValue>|CsvFile|File|array<TKey, TValue> $data
+     * @return Streamable<TKey, TValue>
      */
-    private static function streamableOfType($data): Streamable
+    private static function streamableOfType(File|Iterator|array|CsvFile $data): Streamable
     {
-        switch (true) {
-            case is_array($data):
-                return new StreamableArray($data);
-            case $data instanceof File:
-                return new StreamableFile($data);
-            case $data instanceof CsvFile:
-                return new StreamableCsvFile($data);
-            case $data instanceof Iterator:
-                return new StreamableIterator($data);
-        }
-        throw StreamException::createFromThrowable(new InvalidArgumentException("type not found"));
+        return match (true) {
+            is_array($data) => new StreamableArray($data),
+            $data instanceof File => new StreamableFile($data),
+            $data instanceof CsvFile => new StreamableCsvFile($data),
+            default => new StreamableIterator($data),
+        };
     }
 
+    /**
+     * @param int $start
+     * @param int $inclusiveEnd
+     * @return Stream<int, int>
+     */
     public static function range(int $start, int $inclusiveEnd): Stream
     {
         return new Stream(new StreamableRange($start, $inclusiveEnd));
     }
 
+    /**
+     * @param string $pattern
+     * @param string $source
+     * @return Stream<TKey, TValue>
+     * @throws StreamException
+     */
     public static function split(string $pattern, string $source): Stream
     {
         $data = preg_split($pattern, $source);

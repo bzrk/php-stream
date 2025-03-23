@@ -1,8 +1,29 @@
 version: "3"
 services:
-  php8:
+  php8.2:
     image: bzrk/php-stream
-    build: ./docker
+    build:
+      dockerfile: ./docker
+      args:
+        PHP_VERSION: 8.2
+    volumes:
+      - ./:/app
+    command: composer verify
+
+  php8.3:
+    image: bzrk/php-stream
+    build:
+      dockerfile: ./docker
+      args:
+        PHP_VERSION: 8.3
+    volumes:
+      - ./:/app
+    command: composer verify
+
+  php8.4:
+    image: bzrk/php-stream
+    build:
+      dockerfile: ./docker
     volumes:
       - ./:/app
     command: composer verify

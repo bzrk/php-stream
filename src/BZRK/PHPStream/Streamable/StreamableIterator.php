@@ -7,6 +7,11 @@ namespace BZRK\PHPStream\Streamable;
 use BZRK\PHPStream\Streamable;
 use Iterator;
 
+/**
+ * @template TKey
+ * @template TValue
+ * @implements Streamable<TKey, TValue>
+ */
 class StreamableIterator implements Streamable
 {
     /**

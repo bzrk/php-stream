@@ -8,14 +8,18 @@ use BZRK\PHPStream\Comparator;
 use BZRK\PHPStream\Streamable;
 use Generator;
 use IteratorIterator;
+use Traversable;
 
 /**
- * @extends IteratorIterator<mixed, mixed, \Iterator>
+ * @template TKey
+ * @template TValue
+ * @extends IteratorIterator<TKey, TValue, Traversable<TKey, TValue>>
+ * @implements Streamable<TKey, TValue>
  */
 class SortIterator extends IteratorIterator implements Streamable
 {
     /**
-     * @param Streamable<mixed> $streamable
+     * @param Streamable<TKey, TValue> $streamable
      * @param Comparator $comparator
      */
     public function __construct(Streamable $streamable, Comparator $comparator)
@@ -31,8 +35,8 @@ class SortIterator extends IteratorIterator implements Streamable
     }
 
     /**
-     * @param Streamable<mixed> $streamable
-     * @return array<mixed>
+     * @param Streamable<TKey, TValue> $streamable
+     * @return array<TKey, TValue>
      */
     private function toArray(Streamable $streamable): array
     {

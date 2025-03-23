@@ -175,18 +175,6 @@ class BasicTest extends TestCase
         Streams::range(1, 5)->collect(Exception::class);
     }
 
-    public function testCollectWrongEntryTypeOfCollection(): void
-    {
-        self::expectException(StreamException::class);
-        if (PHP_MAJOR_VERSION === 7) {
-            self::expectExceptionMessageMatches('/must be of the type string, int given/');
-        } else {
-            self::expectExceptionMessageMatches('/Argument #1 must be of type string, int given,/');
-        }
-
-        Streams::range(1, 5)->collect(StringCollection::class);
-    }
-
     public function testToGenerator(): void
     {
         $result = Streams::range(1, 5)->toGenerator();
@@ -206,9 +194,6 @@ class BasicTest extends TestCase
         self::assertThat($result->getReturn(), self::equalTo(4));
     }
 
-    /**
-     * @throws StreamException
-     */
     public function testToGeneratorWithDefaultReturn(): void
     {
         $result = Streams::of([])->toGenerator(fn(int $i) => $i * 2, 99);

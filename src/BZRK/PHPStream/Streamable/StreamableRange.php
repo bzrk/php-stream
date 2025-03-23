@@ -6,6 +6,9 @@ namespace BZRK\PHPStream\Streamable;
 
 use Generator;
 
+/**
+ * @extends StreamableIterator<int, int>
+ */
 class StreamableRange extends StreamableIterator
 {
     public function __construct(int $start, int $end)

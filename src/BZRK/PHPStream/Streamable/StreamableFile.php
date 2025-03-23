@@ -7,6 +7,11 @@ namespace BZRK\PHPStream\Streamable;
 use BZRK\PHPStream\File;
 use Generator;
 
+/**
+ * @template TKey
+ * @template TValue
+ * @extends StreamableIterator<TKey, TValue>
+ */
 class StreamableFile extends StreamableIterator
 {
     public function __construct(File $file)
