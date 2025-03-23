@@ -1,4 +1,5 @@
-FROM php:8.2-bullseye
+ARG PHP_VERSION=8.4
+FROM php:${PHP_VERSION}-bullseye
 
 RUN apt -y update && \
     apt install -y git libzip-dev zip

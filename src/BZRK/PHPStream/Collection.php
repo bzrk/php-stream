@@ -9,23 +9,27 @@ use Countable;
 use Iterator;
 
 /**
- * @implements Iterator<mixed, mixed>
+ * @template TValue
+ * @implements Iterator<int|string, TValue>
  */
 abstract class Collection implements Countable, Iterator
 {
     /**
-     * @var ArrayIterator<int|string, mixed>
+     * @var ArrayIterator<int|string, TValue>
      */
     protected ArrayIterator $iterator;
 
     /**
-     * @param array<mixed> $data
+     * @param array<int|string, TValue> $data
      */
     protected function __construct(array $data)
     {
         $this->iterator = new ArrayIterator($data);
     }
 
+    /**
+     * @return Stream<int|string, TValue>
+     */
     public function stream(): Stream
     {
         return Streams::of($this->iterator);
@@ -34,7 +38,7 @@ abstract class Collection implements Countable, Iterator
     /**
      * @param mixed $value
      */
-    protected function addEntry($value): void
+    protected function addEntry(mixed $value): void
     {
         $this->iterator->append($value);
     }

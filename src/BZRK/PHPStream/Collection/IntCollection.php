@@ -6,6 +6,9 @@ namespace BZRK\PHPStream\Collection;
 
 use BZRK\PHPStream\Collection;
 
+/**
+ * @extends Collection<int>
+ */
 class IntCollection extends Collection
 {
     public function __construct(int ...$data)

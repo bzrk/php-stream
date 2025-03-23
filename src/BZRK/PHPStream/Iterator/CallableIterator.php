@@ -7,16 +7,20 @@ namespace BZRK\PHPStream\Iterator;
 use BZRK\PHPStream\Streamable;
 use Closure;
 use IteratorIterator;
+use Traversable;
 
 /**
- * @extends IteratorIterator<mixed, mixed, \Iterator>
+ * @template TKey
+ * @template TValue
+ * @extends IteratorIterator<TKey, TValue, Traversable<TKey, TValue>>
+ * @implements Streamable<TKey, TValue>
  */
 class CallableIterator extends IteratorIterator implements Streamable
 {
     private Closure $closure;
 
     /**
-     * @param Streamable<mixed> $streamable
+     * @param Streamable<TKey, TValue> $streamable
      * @param Closure $closure
      */
     public function __construct(Streamable $streamable, \Closure $closure)

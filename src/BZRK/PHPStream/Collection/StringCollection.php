@@ -6,6 +6,9 @@ namespace BZRK\PHPStream\Collection;
 
 use BZRK\PHPStream\Collection;
 
+/**
+ * @extends Collection<string>
+ */
 class StringCollection extends Collection
 {
     public function __construct(string ...$data)

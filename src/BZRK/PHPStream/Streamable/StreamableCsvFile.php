@@ -7,6 +7,11 @@ namespace BZRK\PHPStream\Streamable;
 use BZRK\PHPStream\CsvFile;
 use Generator;
 
+/**
+ * @template TKey
+ * @template TValue
+ * @extends StreamableIterator<TKey, TValue>
+ */
 class StreamableCsvFile extends StreamableIterator
 {
     public function __construct(CsvFile $file)

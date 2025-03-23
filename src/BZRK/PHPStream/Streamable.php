@@ -7,7 +7,9 @@ namespace BZRK\PHPStream;
 use Iterator;
 
 /**
- * @extends Iterator<mixed>
+ * @template TKey
+ * @template-covariant TValue
+ * @extends Iterator<TKey, TValue>
  */
 interface Streamable extends Iterator
 {

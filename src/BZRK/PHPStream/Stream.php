@@ -16,15 +16,19 @@ use Throwable;
 
 use function implode;
 
+/**
+ * @template TKey
+ * @template TValue
+ */
 class Stream
 {
     /**
-     * @var Streamable<mixed>
+     * @var Streamable<TKey, TValue>
      */
     private Streamable $streamable;
 
     /**
-     * @param Streamable<mixed> $streamable
+     * @param Streamable<TKey, TValue> $streamable
      */
     public function __construct(Streamable $streamable)
     {
@@ -36,11 +40,19 @@ class Stream
         return iterator_count($this->streamable);
     }
 
+    /**
+     * @param Closure $call
+     * @return self<TKey, TValue>
+     */
     public function map(Closure $call): self
     {
         return new Stream(new CallableIterator($this->streamable, $call));
     }
 
+    /**
+     * @param Closure $call
+     * @return self<TKey, TValue>
+     */
     public function flatMap(Closure $call): self
     {
         $func = function (Closure $call): Generator {
@@ -54,16 +66,26 @@ class Stream
         return new Stream(new StreamableIterator($func($call)));
     }
 
+    /**
+     * @param Closure $call
+     * @return self<TKey, TValue>
+     */
     public function filter(Closure $call): self
     {
         return new Stream(new FilterIterator($this->streamable, $call));
     }
 
+    /**
+     * @return self<TKey, TValue>
+     */
     public function notNull(): self
     {
         return new Stream(new FilterIterator($this->streamable, fn($it) => $it !== null));
     }
 
+    /**
+     * @return self<TKey, TValue>
+     */
     public function notEmpty(): self
     {
         return new Stream(new FilterIterator($this->streamable, fn($it) => !empty($it)));
@@ -78,7 +100,7 @@ class Stream
 
     /**
      * @param bool $preserveKeys
-     * @return array<mixed, mixed>
+     * @return array<TKey, TValue>
      */
     public function toList(bool $preserveKeys = false): array
     {
@@ -88,7 +110,7 @@ class Stream
     /**
      * @param Closure $key
      * @param Closure $value
-     * @return array<mixed, mixed>
+     * @return array<TKey, TValue>
      */
     public function toMap(Closure $key, Closure $value): array
     {
@@ -103,7 +125,7 @@ class Stream
 
     /**
      * @param Closure $call
-     * @return array<mixed, mixed>
+     * @return array<TKey, TValue>
      */
     public function associateBy(Closure $call): array
     {
@@ -117,9 +139,9 @@ class Stream
     }
 
     /**
-     * @return mixed|null
+     * @return TValue|null
      */
-    public function first()
+    public function first(): mixed
     {
         foreach ($this->streamable as $it) {
             return $it;
@@ -128,23 +150,35 @@ class Stream
     }
 
     /**
-     * @throws StreamException
+     * @return self<TKey, TValue>
      */
     public function run(): self
     {
         return Streams::of($this->toList(true));
     }
 
+    /**
+     * @param int $size
+     * @return self<TKey, TValue>
+     */
     public function limit(int $size): self
     {
         return new Stream(new LimitIterator($this->streamable, 0, $size));
     }
 
+    /**
+     * @param Comparator $comparator
+     * @return self<TKey, TValue>
+     */
     public function order(Comparator $comparator): self
     {
         return new Stream(new SortIterator($this->streamable, $comparator));
     }
 
+    /**
+     * @param int $count
+     * @return self<TKey, TValue>
+     */
     public function skip(int $count): self
     {
         return new Stream(new LimitIterator($this->streamable, $count));
@@ -160,11 +194,12 @@ class Stream
         return $this->implode($separator);
     }
 
+    /**
+     * @param int $count
+     * @return self<TKey, TValue>
+     */
     public function batch(int $count): self
     {
-        /**
-         * @throws StreamException
-         */
         $func = function (int $count): Generator {
             $data = [];
 
@@ -186,7 +221,7 @@ class Stream
 
     /**
      * @param string $class
-     * @return Collection<mixed>
+     * @return Collection<TValue>
      * @throws StreamException
      */
     public function collect(string $class): Collection
@@ -208,7 +243,7 @@ class Stream
      * @param mixed $default
      * @return Generator
      */
-    public function toGenerator(Closure $call = null, $default = null): Generator
+    public function toGenerator(Closure|null $call = null, mixed $default = null): Generator
     {
         $ret = null;
         $func = $call ?? fn() => null;
@@ -219,6 +254,10 @@ class Stream
         return $ret ?? $default;
     }
 
+    /**
+     * @param Closure $call
+     * @return self<TKey, TValue>
+     */
     public function callBack(Closure $call): self
     {
         $func = function (Closure $call): Generator {

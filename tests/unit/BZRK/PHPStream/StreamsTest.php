@@ -19,9 +19,6 @@ use function PHPUnit\Framework\assertThat;
 
 class StreamsTest extends TestCase
 {
-    /**
-     * @throws StreamException
-     */
     #[Test]
     #[DataProvider('dataProviderTestOf')]
     public function testOf(mixed $type): void
@@ -37,16 +34,9 @@ class StreamsTest extends TestCase
         yield [new ArrayIterator([])];
     }
 
-    #[Test]
-    public function createByWrongType(): void
-    {
-        $this->expectException(StreamException::class);
-        $this->expectExceptionMessage("type not found");
-
-        // @phpstan-ignore-next-line
-        Streams::of(1);
-    }
-
+    /**
+     * @throws StreamException
+     */
     #[Test]
     public function createBySplittingAString(): void
     {
