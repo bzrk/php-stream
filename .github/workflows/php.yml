@@ -7,12 +7,12 @@ jobs:
   build:
     strategy:
       matrix:
-        php_version: [ 8.2, 8.3, 8.4 ]
+        php_version: [ 8.4, 8.5 ]
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
 
       - name: Verify
         uses: shivammathur/setup-php@v2

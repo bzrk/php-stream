@@ -1,5 +1,5 @@
-ARG PHP_VERSION=8.4
-FROM php:${PHP_VERSION}-bullseye
+ARG PHP_VERSION=8.5-cli
+FROM php:${PHP_VERSION}
 
 RUN apt -y update && \
     apt install -y git libzip-dev zip
